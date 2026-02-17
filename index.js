@@ -26,7 +26,7 @@ function displayContributors(contributorsList) {
 function hideBackToTopButton() {
   const bttButton = document.getElementById("bttbutton");
 
-  bttButton.addEventListener("click", (e) => {
+  bttButton.addEventListener("click", () => {
     window.scrollTo({
       top: 0,
       left: 0,
@@ -34,10 +34,15 @@ function hideBackToTopButton() {
     });
   });
 
-  window.addEventListener("scroll", (e) => {
-    bttButton.style.display = window.scrollY > 15 ? "block" : "none";
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 100) {
+      bttButton.classList.remove("hidden");
+    } else {
+      bttButton.classList.add("hidden");
+    }
   });
 }
+
 
 // get contributors list  from github API
 async function getContributorsList() {
@@ -50,8 +55,11 @@ async function getContributorsList() {
   }
 }
 
-hideBackToTopButton();
-getContributorsList();
+document.addEventListener("DOMContentLoaded", () => {
+  hideBackToTopButton();
+  getContributorsList();
+});
+
 
 function googleTranslateElementInit() {
   new google.translate.TranslateElement(
